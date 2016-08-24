@@ -1,0 +1,145 @@
+var _user$project$Players_Edit$listBtn = A2(
+	_elm_lang$html$Html$button,
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html_Attributes$class('btn regular'),
+			_elm_lang$html$Html_Events$onClick(_user$project$Players_Messages$ShowPlayers)
+		]),
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(
+			_elm_lang$html$Html$i,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('fa fa-chevron-left mr1')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[])),
+			_elm_lang$html$Html$text('List')
+		]));
+var _user$project$Players_Edit$btnLevelIncrease = function (player) {
+	return A2(
+		_elm_lang$html$Html$a,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('btn ml1 h1'),
+				_elm_lang$html$Html_Events$onClick(
+				A2(_user$project$Players_Messages$ChangeLevel, player.id, 1))
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$i,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('fa fa-plus-circle')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[]))
+			]));
+};
+var _user$project$Players_Edit$btnLevelDecrease = function (player) {
+	return A2(
+		_elm_lang$html$Html$a,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('btn ml1 h1'),
+				_elm_lang$html$Html_Events$onClick(
+				A2(_user$project$Players_Messages$ChangeLevel, player.id, -1))
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$i,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('fa fa-minus-circle')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[]))
+			]));
+};
+var _user$project$Players_Edit$formLevel = function (player) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('clearfix py1')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('col col-5')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Level')
+					])),
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('col col-7')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$span,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('h2 bold')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text(
+								_elm_lang$core$Basics$toString(player.level))
+							])),
+						_user$project$Players_Edit$btnLevelDecrease(player),
+						_user$project$Players_Edit$btnLevelIncrease(player)
+					]))
+			]));
+};
+var _user$project$Players_Edit$form = function (player) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('m3')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$h1,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(player.name)
+					])),
+				_user$project$Players_Edit$formLevel(player)
+			]));
+};
+var _user$project$Players_Edit$nav = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('clearfix mb2 white bg-black p1')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[_user$project$Players_Edit$listBtn]));
+};
+var _user$project$Players_Edit$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_user$project$Players_Edit$nav(model),
+				_user$project$Players_Edit$form(model)
+			]));
+};

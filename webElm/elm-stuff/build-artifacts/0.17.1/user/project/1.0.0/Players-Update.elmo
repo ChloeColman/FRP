@@ -1,0 +1,57 @@
+var _user$project$Players_Update$updatePlayer = function (updatedPlayer) {
+	var select = function (existingPlayer) {
+		return _elm_lang$core$Native_Utils.eq(existingPlayer.id, updatedPlayer.id) ? updatedPlayer : existingPlayer;
+	};
+	return _elm_lang$core$List$map(select);
+};
+var _user$project$Players_Update$changeLevelCommands = F2(
+	function (playerId, howMuch) {
+		var cmdForPlayer = function (existingPlayer) {
+			return _elm_lang$core$Native_Utils.eq(existingPlayer.id, playerId) ? _user$project$Players_Commands$save(
+				_elm_lang$core$Native_Utils.update(
+					existingPlayer,
+					{level: existingPlayer.level + howMuch})) : _elm_lang$core$Platform_Cmd$none;
+		};
+		return _elm_lang$core$List$map(cmdForPlayer);
+	});
+var _user$project$Players_Update$update = F2(
+	function (message, players) {
+		var _p0 = message;
+		switch (_p0.ctor) {
+			case 'FetchAllDone':
+				return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'FetchAllFail':
+				return {ctor: '_Tuple2', _0: players, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'ShowPlayers':
+				return {
+					ctor: '_Tuple2',
+					_0: players,
+					_1: _elm_lang$navigation$Navigation$modifyUrl('#players')
+				};
+			case 'ShowPlayer':
+				return {
+					ctor: '_Tuple2',
+					_0: players,
+					_1: _elm_lang$navigation$Navigation$modifyUrl(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'#players/',
+							_elm_lang$core$Basics$toString(_p0._0)))
+				};
+			case 'ChangeLevel':
+				return {
+					ctor: '_Tuple2',
+					_0: players,
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						A3(_user$project$Players_Update$changeLevelCommands, _p0._0, _p0._1, players))
+				};
+			case 'SaveSuccess':
+				return {
+					ctor: '_Tuple2',
+					_0: A2(_user$project$Players_Update$updatePlayer, _p0._0, players),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {ctor: '_Tuple2', _0: players, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});

@@ -1,0 +1,67 @@
+var _user$project$Players_Commands$memberEncoded = function (player) {
+	var list = _elm_lang$core$Native_List.fromArray(
+		[
+			{
+			ctor: '_Tuple2',
+			_0: 'id',
+			_1: _elm_lang$core$Json_Encode$int(player.id)
+		},
+			{
+			ctor: '_Tuple2',
+			_0: 'name',
+			_1: _elm_lang$core$Json_Encode$string(player.name)
+		},
+			{
+			ctor: '_Tuple2',
+			_0: 'level',
+			_1: _elm_lang$core$Json_Encode$int(player.level)
+		}
+		]);
+	return _elm_lang$core$Json_Encode$object(list);
+};
+var _user$project$Players_Commands$memberDecoder = A4(
+	_elm_lang$core$Json_Decode$object3,
+	_user$project$Players_Models$Player,
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'id', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode_ops[':='], 'level', _elm_lang$core$Json_Decode$int));
+var _user$project$Players_Commands$collectionDecoder = _elm_lang$core$Json_Decode$list(_user$project$Players_Commands$memberDecoder);
+var _user$project$Players_Commands$saveUrl = function (playerId) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'http://localhost:4000/players/',
+		_elm_lang$core$Basics$toString(playerId));
+};
+var _user$project$Players_Commands$saveTask = function (player) {
+	var body = _evancz$elm_http$Http$string(
+		A2(
+			_elm_lang$core$Json_Encode$encode,
+			0,
+			_user$project$Players_Commands$memberEncoded(player)));
+	var config = {
+		verb: 'PATCH',
+		headers: _elm_lang$core$Native_List.fromArray(
+			[
+				{ctor: '_Tuple2', _0: 'Content-Type', _1: 'application/json'}
+			]),
+		url: _user$project$Players_Commands$saveUrl(player.id),
+		body: body
+	};
+	return A2(
+		_evancz$elm_http$Http$fromJson,
+		_user$project$Players_Commands$memberDecoder,
+		A2(_evancz$elm_http$Http$send, _evancz$elm_http$Http$defaultSettings, config));
+};
+var _user$project$Players_Commands$save = function (player) {
+	return A3(
+		_elm_lang$core$Task$perform,
+		_user$project$Players_Messages$SaveFail,
+		_user$project$Players_Messages$SaveSuccess,
+		_user$project$Players_Commands$saveTask(player));
+};
+var _user$project$Players_Commands$fetchAllUrl = 'http://localhost:4000/players';
+var _user$project$Players_Commands$fetchAll = A3(
+	_elm_lang$core$Task$perform,
+	_user$project$Players_Messages$FetchAllFail,
+	_user$project$Players_Messages$FetchAllDone,
+	A2(_evancz$elm_http$Http$get, _user$project$Players_Commands$collectionDecoder, _user$project$Players_Commands$fetchAllUrl));

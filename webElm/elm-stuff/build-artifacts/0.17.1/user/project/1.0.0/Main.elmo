@@ -1,0 +1,170 @@
+var _user$project$Main$is13 = function (code) {
+	return _elm_lang$core$Native_Utils.eq(code, 13) ? _elm_lang$core$Result$Ok(
+		{ctor: '_Tuple0'}) : _elm_lang$core$Result$Err('not the right key code');
+};
+var _user$project$Main$onEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'keydown',
+		A2(
+			_elm_lang$core$Json_Decode$map,
+			_elm_lang$core$Basics$always(msg),
+			A2(_elm_lang$core$Json_Decode$customDecoder, _elm_lang$html$Html_Events$keyCode, _user$project$Main$is13)));
+};
+var _user$project$Main$inputStyle = _elm_lang$html$Html_Attributes$style(
+	_elm_lang$core$Native_List.fromArray(
+		[
+			{ctor: '_Tuple2', _0: 'width', _1: '100%'},
+			{ctor: '_Tuple2', _0: 'height', _1: '40px'},
+			{ctor: '_Tuple2', _0: 'padding', _1: '10px 0'},
+			{ctor: '_Tuple2', _0: 'font-size', _1: '2em'},
+			{ctor: '_Tuple2', _0: 'text-align', _1: 'center'}
+		]));
+var _user$project$Main$Model = F3(
+	function (a, b, c) {
+		return {topic: a, gifs: b, uid: c};
+	});
+var _user$project$Main$init = {
+	ctor: '_Tuple2',
+	_0: A3(
+		_user$project$Main$Model,
+		'',
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		0),
+	_1: _elm_lang$core$Platform_Cmd$none
+};
+var _user$project$Main$Gif = F2(
+	function (a, b) {
+		return {id: a, model: b};
+	});
+var _user$project$Main$SubMsg = F2(
+	function (a, b) {
+		return {ctor: 'SubMsg', _0: a, _1: b};
+	});
+var _user$project$Main$updateHelp = F3(
+	function (id, msg, gif) {
+		if (!_elm_lang$core$Native_Utils.eq(gif.id, id)) {
+			return {ctor: '_Tuple2', _0: gif, _1: _elm_lang$core$Platform_Cmd$none};
+		} else {
+			var _p0 = A2(_user$project$Gif$update, msg, gif.model);
+			var newGif = _p0._0;
+			var cmds = _p0._1;
+			return {
+				ctor: '_Tuple2',
+				_0: A2(_user$project$Main$Gif, id, newGif),
+				_1: A2(
+					_elm_lang$core$Platform_Cmd$map,
+					_user$project$Main$SubMsg(id),
+					cmds)
+			};
+		}
+	});
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'Topic':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{topic: _p1._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Create':
+				var _p2 = _user$project$Gif$init(model.topic);
+				var newGif = _p2._0;
+				var cmds = _p2._1;
+				var id = model.uid;
+				var newGifs = A2(
+					_elm_lang$core$Basics_ops['++'],
+					model.gifs,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(_user$project$Main$Gif, id, newGif)
+						]));
+				return {
+					ctor: '_Tuple2',
+					_0: A3(_user$project$Main$Model, '', newGifs, id + 1),
+					_1: A2(
+						_elm_lang$core$Platform_Cmd$map,
+						_user$project$Main$SubMsg(id),
+						cmds)
+				};
+			default:
+				var _p3 = _elm_lang$core$List$unzip(
+					A2(
+						_elm_lang$core$List$map,
+						A2(_user$project$Main$updateHelp, _p1._0, _p1._1),
+						model.gifs));
+				var newGifs = _p3._0;
+				var cmds = _p3._1;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{gifs: newGifs}),
+					_1: _elm_lang$core$Platform_Cmd$batch(cmds)
+				};
+		}
+	});
+var _user$project$Main$viewGif = function (_p4) {
+	var _p5 = _p4;
+	return A2(
+		_elm_lang$html$Html_App$map,
+		_user$project$Main$SubMsg(_p5.id),
+		_user$project$Gif$view(_p5.model));
+};
+var _user$project$Main$subHelp = function (_p6) {
+	var _p7 = _p6;
+	return A2(
+		_elm_lang$core$Platform_Sub$map,
+		_user$project$Main$SubMsg(_p7.id),
+		_user$project$Gif$subscriptions(_p7.model));
+};
+var _user$project$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		A2(_elm_lang$core$List$map, _user$project$Main$subHelp, model.gifs));
+};
+var _user$project$Main$Create = {ctor: 'Create'};
+var _user$project$Main$Topic = function (a) {
+	return {ctor: 'Topic', _0: a};
+};
+var _user$project$Main$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$input,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$placeholder('What kind of gifs do you want?'),
+						_elm_lang$html$Html_Attributes$value(model.topic),
+						_user$project$Main$onEnter(_user$project$Main$Create),
+						_elm_lang$html$Html_Events$onInput(_user$project$Main$Topic),
+						_user$project$Main$inputStyle
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[])),
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$style(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								{ctor: '_Tuple2', _0: 'display', _1: 'flex'},
+								{ctor: '_Tuple2', _0: 'flex-wrap', _1: 'wrap'}
+							]))
+					]),
+				A2(_elm_lang$core$List$map, _user$project$Main$viewGif, model.gifs))
+			]));
+};
+var _user$project$Main$main = {
+	main: _elm_lang$html$Html_App$program(
+		{init: _user$project$Main$init, view: _user$project$Main$view, update: _user$project$Main$update, subscriptions: _user$project$Main$subscriptions})
+};

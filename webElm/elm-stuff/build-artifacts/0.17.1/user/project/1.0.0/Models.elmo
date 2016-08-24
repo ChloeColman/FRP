@@ -1,0 +1,11 @@
+var _user$project$Models$initialModel = function (route) {
+	return {
+		players: _elm_lang$core$Native_List.fromArray(
+			[]),
+		route: route
+	};
+};
+var _user$project$Models$Model = F2(
+	function (a, b) {
+		return {players: a, route: b};
+	});

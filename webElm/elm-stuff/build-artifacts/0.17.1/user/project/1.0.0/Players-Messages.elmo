@@ -1,0 +1,20 @@
+var _user$project$Players_Messages$SaveFail = function (a) {
+	return {ctor: 'SaveFail', _0: a};
+};
+var _user$project$Players_Messages$SaveSuccess = function (a) {
+	return {ctor: 'SaveSuccess', _0: a};
+};
+var _user$project$Players_Messages$ChangeLevel = F2(
+	function (a, b) {
+		return {ctor: 'ChangeLevel', _0: a, _1: b};
+	});
+var _user$project$Players_Messages$ShowPlayer = function (a) {
+	return {ctor: 'ShowPlayer', _0: a};
+};
+var _user$project$Players_Messages$ShowPlayers = {ctor: 'ShowPlayers'};
+var _user$project$Players_Messages$FetchAllFail = function (a) {
+	return {ctor: 'FetchAllFail', _0: a};
+};
+var _user$project$Players_Messages$FetchAllDone = function (a) {
+	return {ctor: 'FetchAllDone', _0: a};
+};

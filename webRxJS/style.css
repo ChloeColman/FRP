@@ -1,0 +1,64 @@
+body {
+	font-family: Sans-Serif;
+	font-size: 1em;
+}
+
+.tstContainer {
+	width: 333px;
+	height: 150px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	float: left;
+	border-style: solid;
+	border-radius: 5px;
+	word-wrap: break-word;
+	margin: 10px;
+	padding: 5px;
+	cursor: pointer;
+	padding-top: 30px;
+}
+
+#frameworkDropdown{
+	margin-left: 10px;
+	margin-right: 0px;
+	padding-right: 0px;
+	height: 21px;
+	border-radius: 5px 0px 0px 5px;
+}
+
+#nameField {
+	width: 231px;
+}
+
+.paramContainer{
+	margin-bottom: 15px;
+	margin-left: 12px;
+	width: 100%;
+}
+
+.params {
+	padding: 15px;
+	margin-left: 30px;
+	margin-top: 5px;
+	position:fixed;
+	background: white;
+	border-radius: 5px;
+	border: solid;
+}
+
+.params > * {
+	margin-right: 10px;
+}
+
+.nmlbl{
+	width : 170px;
+	font-weight: bold;
+	float: left;
+}
+
+.dispField{
+	margin-left: 20px;
+	margin-right: 20px;
+	padding-top: 70px;
+}
+
